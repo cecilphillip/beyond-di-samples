@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>RuleMapper Demo</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.css">
+    <link rel="stylesheet" href="~/Content/css/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <link rel="stylesheet" href="~/Content/css/sublime.css">
+    <link rel="stylesheet" href="~/Content/css/toastr.min.css">
+
+    <script src="~/Scripts/lib/modernizr.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="header header-fixed navbar">
+            <div class="brand">
+
+                <a href="index.html" class="navbar-brand">
+
+                    <span class="heading-font">
+                        Rule Mapper
+                    </span>
+                </a>
+                <!-- /logo -->
+            </div>
+
+        </header>
+
+        <section class="layout">
+            <!-- sidebar menu -->
+            <aside class="sidebar offscreen-left">
+                <!-- main navigation -->
+                <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
+                    <p class="nav-title">MENU</p>
+                    <ul class="nav">
+                        <!-- Event Generator -->
+                        <li>
+
+                            <a href="@Url.Action("Generator","Home")">
+                                <i class="ti-home"></i>
+                                <span>Event Generator</span>
+                            </a>
+                        </li>
+                        <!-- /Event Generator -->
+                        <!-- Rule Mapper -->
+                        <li>
+                            <a href="@Url.Action("Mapper","Home")">
+                                <i class="ti-settings"></i>
+                                <span>Rule Mapper</span>
+                            </a>
+                        </li>
+                        <!-- /Rule Mapper -->
+
+                    </ul>
+                </nav>
+            </aside>
+            <!-- /sidebar menu -->
+            <!-- main content -->
+            <section class="main-content">
+
+                <div class="content-wrap">
+
+                    <div class="wrapper">
+
+                        @RenderBody()
+
+                    </div>
+
+                </div>
+
+                <a class="exit-offscreen"></a>
+            </section>
+            <!-- /main content -->
+        </section>
+    </div>
+
+    <script src="~/Scripts/lib/jquery-2.2.0.min.js"></script>
+    <script src="~/Scripts/lib/jquery.signalr-2.2.0.min.js"></script>
+    <script src="~/Scripts/lib/bootstrap.min.js"></script>
+    <script src="~/Scripts/lib/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/lib/toastr.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+
+    <script>
+        var eventHub;
+        $(function () {
+            var connection = $.hubConnection();
+
+            eventHub = connection.createHubProxy('eventsHub');
+            eventHub.on('notify', function (message) {
+                toastr.success(message);
+            });
+
+            connection.start().done(function () {
+                console.log('Now we\'re in business, connection ID=' + connection.id);
+            });
+        });
+    </script>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

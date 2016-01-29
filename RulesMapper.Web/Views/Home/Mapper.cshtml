@@ -1,0 +1,75 @@
+﻿@model   IEnumerable<RulesMapper.Core.RuleDefinitionView>
+
+@{
+    ViewBag.Title = "Mapper";
+}
+
+<div class="row">
+    <div class="col-lg-4 col-md-5 ">
+        <section class="panel">
+            <header class="panel-heading">Enter Your Rule Here</header>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group">
+                        <label for="txtName">Rule Name</label>
+                        <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Enter Event Type">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtEventType">Event Type</label>
+                        <input type="text" class="form-control" id="txtEventType" name="txtEventType" placeholder="Enter Event Type">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSpec">Spec</label>
+                        <input type="text" class="form-control" id="txtSpec" name="txtSpec" placeholder="Enter Spec Code">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtHandler">Handler</label>
+                        <input type="text" class="form-control" id="txtHandler" name="txtHandler" placeholder="Enter Handler Code">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                }
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-8 col-md-7">
+        <section class="panel">
+            <header class="panel-heading">Check All Your Rules</header>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped no-m">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Event Type</th>
+                            <th>Spec Name</th>
+                            <th>Handler Name</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                     @foreach (var item in Model)
+                     {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Event_Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Spec_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Handler_Name)
+                            </td>
+                         </tr>
+                     }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Generator";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <section class="panel no-b">
+            <div class="panel-body">
+                <a href="javascript:;" class="show text-center">
+                    <img src="~/Content/images/avatar.png" class="avatar avatar-lg img-circle" alt="">
+                </a>
+                <div class="show mt15 mb15 text-center">
+                    <div class="h5">
+                        <b>The Mighty Event-O-Matic</b>
+                    </div>
+                    <p class="show text-muted">Choose an event from one of the options below. Happy eventing!!</p>
+                </div>
+            </div>
+            <div class="panel-footer no-p no-b">
+                <div class="row no-m">
+                    <div class="col-xs-4 bg-primary p10 text-center brbl">
+                        <a id="postEventbtn" href="">
+                            <span class="ti-world show mb5"></span> Post Event
+                        </a>
+                    </div>
+                    <div class="col-xs-4 bg-info p10 text-center">
+                        <a id="registerEventbtn" href="">
+                            <span class="ti-world show mb5"></span> Register Event
+                        </a>
+                    </div>
+                    <div class="col-xs-4 bg-primary p10 text-center brbr">
+                        <a id="purchaseEventbtn" href="">
+                            <span class="ti-world show mb5"></span> Purchase Event
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $('#postEventbtn').click(function (evt) {
+                
+                var postEvent = {
+                    event_type: "dnm.social.post",
+                    properties: {
+                        "message": "Hi there!",
+                        "user": "Somebody"
+                    }
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/events/evaluate',
+                    data: JSON.stringify(postEvent),
+                    contentType: "application/json; charset=utf-8",
+                });
+
+                return false;
+            });
+
+            $('#registerEventbtn').click(function (evt) {
+               
+                var registerEvent = {
+                    event_type: "dnm.meeting.register",
+                    properties: {
+                        email: "john@doe.com",
+                        name: "John Doe",
+                        occupation: "Designer"
+                    }
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/events/evaluate',
+                    data: JSON.stringify(registerEvent),
+                    contentType: "application/json; charset=utf-8",
+                });
+
+                return false;
+            });
+
+            $('#purchaseEventbtn').click(function (evt) {
+               
+                var purchaseVent = {
+                    event_type: "dnm.tickets.purchase",
+                    properties: {
+                        status: "VIP",
+                        name: "Somebody Else",
+                        section: "Ballroom",
+                    }
+                };
+
+                if (eventHub) {
+                    eventHub.invoke('evaluate', purchaseVent);
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/events/evaluate',
+                        data: JSON.stringify(purchaseVent),
+                        contentType: "application/json; charset=utf-8",
+                    });
+                }
+                return false;
+            });
+        });
+
+    </script>
+}
